@@ -100,6 +100,15 @@ Type 'make install install-htslib' to do this.)
 Typically you will want to enable HTSlib's HTTPS/etc plugin etc.
 See README for recipes for typical installation.
 
+CMake build
+==================
+
+set `samtools_version` in the cmakerun.sh 
+set `toolchain_file` path in the cmakerun.sh #for android cross compiling
+compile libhts.so file(s) # to use CMake for htslib check https://github.com/hiruna72/htslib
+update 3rdparty folder if necessary 
+set 'htslib_path' to htslib repository
+run cmakerun.sh
 
 Configuration
 =============
