@@ -51,11 +51,11 @@ static inline long peakrss(void)
 }" > samtoolmisc.h
 
 
-# to create a samtools library
+# # to create a samtools library
 cp bamtk.c tempbamtk
 # sed -i 's/int main(int argc/int init_samtools(int argc/g' bamtk.c
 sed -i ':a;N;$!ba;s/int main(int argc, char \*argv\[\])\n{/int init_samtools(int argc, char *argv[])\n{\n\tdouble realtime0 = realtime();/g' bamtk.c
-sed -i 's+return ret;+fprintf("[%s] Real time: %.3f sec; CPU time: %.3f sec; Peak RAM: %.3f GB\\n\\n",\n\t\t__func__, realtime() - realtime0, cputime(),peakrss() / 1024.0 / 1024.0 / 1024.0);\n\treturn ret;+g' bamtk.c
+sed -i 's+return ret;+fprintf(stderr,"[%s] Real time: %.3f sec; CPU time: %.3f sec; Peak RAM: %.3f GB\\n\\n",\n\t\t__func__, realtime() - realtime0, cputime(),peakrss() / 1024.0 / 1024.0 / 1024.0);\n\treturn ret;+g' bamtk.c
 sed -i 's/#include "version.h"/#include "version.h"\n#include "samtoolmisc.h"/g' bamtk.c
 
 touch interface.h
@@ -71,10 +71,10 @@ cd build
  # make -j 8
 
 # # for architecture armeabi-V7a
-# cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE:STRING=$toolchain_file -DANDROID_PLATFORM=android-21 -DDEPLOY_PLATFORM:STRING="armeabi-v7a" -DANDROID_ABI="armeabi-v7a"
+cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE:STRING=$toolchain_file -DANDROID_PLATFORM=android-21 -DDEPLOY_PLATFORM:STRING="armeabi-v7a" -DANDROID_ABI="armeabi-v7a"
 
-# # for architecture arm66-v8a
-cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE:STRING=$toolchain_file -DANDROID_PLATFORM=android-21 -DDEPLOY_PLATFORM:STRING="arm64-v8a" -DANDROID_ABI="arm64-v8a"
+# # for architecture arm64-v8a
+# cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE:STRING=$toolchain_file -DANDROID_PLATFORM=android-21 -DDEPLOY_PLATFORM:STRING="arm64-v8a" -DANDROID_ABI="arm64-v8a"
 
 ninja
 cd -
